@@ -9,27 +9,27 @@
 <body>
     <h1>Végtelen Mértani Sorozat</h1>
 
-    <div class="csuszka>
-        <label for="csuszka">Érték:</label>
-        <input
-        type="range"
-        id="csuszka"
-        min="-1"
-        max="1"
-        step="0.01"
-        value="0.50"
-        oninput="ertek.textContent = Number(this.value).toFixed(2)">
 
-        <span id="ertek">0.50</span>
-    </div>
+<label>q értéke:
+<input type="range" id="q" min="-1.5" max="1.5" step="0.01" value="0.5">
+</label>
+<span id="qErtek">0.50</span>
 
-    <div class="sorozat">
-        <h2>Sorozat: 1+p + p2 +p3</h2>
-        <p id="osszeg"></p>
-        <p id="vegtelenoszeg"></p>
-    </div>
+<p><strong>Sorozat:</strong> 1 + q + q² + q³ + …</p>
+
+<p><strong>Első 10 tag:</strong></p>
+<div class="diagram" id="diagram"></div>
+
+<p><strong>Véges összeg (10 tag):</strong>
+<span id="veg">–</span>
+</p>
+
+<p><strong>Végtelen összeg:</strong>
+<span id="vegtelen">–</span>
+</p>
 
 
-    <script src="script.js"></script>
+
+    <script src="index.js"></script>
 </body>
 </html>
