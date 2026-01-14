@@ -1,43 +1,41 @@
-// Végtelen mértani megjelenítése
+// Végtelen mértani sorozat megjelenítése
 document.addEventListener('DOMContentLoaded', function() {
-    const qSlider = document.getElementById('q-slider');
-    const qValue = document.getElementById('q-value');
-    const seriesInfo = document.getElementById('series-info');
-    const termsList = document.getElementById('terms-list');
+    const csuszka = document.getElementById('csuszka');
+    const ertek = document.getElementById('ertek');
+    const osszegElem = document.getElementById('osszeg');
+    const vegtelenOsszegElem = document.getElementById('vegtelenoszeg');
+    const tabla = document.getElementById('tabla');
 
     function updateSeries() {
-        const q = parseFloat(qSlider.value);
-        qValue.textContent = q.toFixed(2);
+        const p = parseFloat(csuszka.value);
+        ertek.textContent = p.toFixed(2);
         // Véges összeg (10 tag)
         let sum = 0;
         let terms = [];
         for (let i = 0; i < 10; i++) {
-            const term = Math.pow(q, i);
+            const term = Math.pow(p, i);
             sum += term;
             terms.push(term);
         }
         // Végtelen összeg
-        let infiniteSum = Math.abs(q) < 1 ? (1 / (1 - q)) : null;
+        let infiniteSum = Math.abs(p) < 1 ? (1 / (1 - p)) : null;
 
-        // Sorozat képlet
-        let formula = 'Sorozat: 1 + q + q² + q³ + ...';
-        let finiteSumText = `Véges összeg (10 tag): <b>${sum.toFixed(4)}</b>`;
-        let infiniteSumText = infiniteSum !== null ? `Végtelen összeg: <b>${infiniteSum.toFixed(4)}</b>` : '<span style="color:red">A végtelen összeg nem létezik!</span>';
-        seriesInfo.innerHTML = `<b>${formula}</b><br>${finiteSumText}<br>${infiniteSumText}`;
-        // Tagok listázása
-        termsList.innerHTML = '';
+        osszegElem.innerHTML = `Véges összeg (10 tag): <b>${sum.toFixed(4)}</b>`;
+        vegtelenOsszegElem.innerHTML = infiniteSum !== null ? `Végtelen összeg: <b>${infiniteSum.toFixed(4)}</b>` : '<span style="color:red">A végtelen összeg nem létezik!</span>';
+
+        // Tagok listázása a táblázatban
+        tabla.innerHTML = '';
         for (let i = 0; i < terms.length; i++) {
-            const li = document.createElement('li');
-            li.textContent = `q^${i} = ${terms[i].toFixed(4)}`;
-            li.style.background = '#4caf50';
-            li.style.color = 'white';
-            li.style.margin = '6px 0';
-            li.style.padding = '6px';
-            li.style.borderRadius = '5px';
-            li.style.width = `${120 + terms[i]*180}px`;
-            termsList.appendChild(li);
+            const tr = document.createElement('tr');
+            const tdHatvany = document.createElement('td');
+            const tdErtek = document.createElement('td');
+            tdHatvany.textContent = `p^${i}`;
+            tdErtek.textContent = terms[i].toFixed(4);
+            tr.appendChild(tdHatvany);
+            tr.appendChild(tdErtek);
+            tabla.appendChild(tr);
         }
     }
-    qSlider.addEventListener('input', updateSeries);
+    csuszka.addEventListener('input', updateSeries);
     updateSeries();
 });
