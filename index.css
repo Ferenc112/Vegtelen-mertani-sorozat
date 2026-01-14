@@ -9,51 +9,69 @@ body {
 
 h1 {
     margin: 24px 0;
+    font-size: 2.7rem;
+}
+
+.csuszka, .sorozat, .diagram {
+    background: #fff;
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0001;
 }
 
 .csuszka {
-    background: #fff;
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
-    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .csuszka input[type="range"] {
-    width: 180px;
-}
-
-.csuszka span {
-    font-weight: bold;
-    min-width: 40px;
+    width: 95%;
+    accent-color: #1976d2;
+    max-width: 900px;
+    min-width: 300px;
 }
 
 .sorozat {
-    background: #fff;
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 16px;
-    border-radius: 8px;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+.sorozat strong {
+    font-size: 1.15rem;
 }
 
 .diagram {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 4px;
-    height: 120px;
-    margin: 20px auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    min-height: 300px;
+    margin-bottom: 32px;
 }
 
 .oszlop {
-    width: 20px;
-    background: #3498db;
-    color: white;
-    font-size: 10px;
+    background: #4caf50;
+    color: #fff;
+    font-size: 1.05rem;
+    margin: 6px 0;
+    border-radius: 0 16px 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    transition: width 0.3s;
+    box-shadow: 0 1px 4px #0002;
+    min-width: 60px;
+    max-width: 400px;
+    height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 table {
