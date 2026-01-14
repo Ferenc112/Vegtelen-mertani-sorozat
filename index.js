@@ -1,41 +1,62 @@
 // Végtelen mértani sorozat megjelenítése
 document.addEventListener('DOMContentLoaded', function() {
-    const csuszka = document.getElementById('csuszka');
-    const ertek = document.getElementById('ertek');
-    const osszegElem = document.getElementById('osszeg');
-    const vegtelenOsszegElem = document.getElementById('vegtelenoszeg');
-    const tabla = document.getElementById('tabla');
+    const qSlider = document.getElementById('q');
+    const qValue = document.getElementById('qErtek');
+    const vegElem = document.getElementById('veg');
+    const vegtelenElem = document.getElementById('vegtelen');
+    const diagram = document.getElementById('diagram');
+
+    // Csúszka minimum és maximum beállítása 0 és 1 közé
+    qSlider.min = '0';
+    qSlider.max = '1';
+    qSlider.step = '0.01';
+    if (parseFloat(qSlider.value) < 0 || parseFloat(qSlider.value) > 1) {
+        qSlider.value = '0.5';
+    }
 
     function updateSeries() {
-        const p = parseFloat(csuszka.value);
-        ertek.textContent = p.toFixed(2);
+        const q = parseFloat(qSlider.value);
+        qValue.textContent = q.toFixed(2);
         // Véges összeg (10 tag)
         let sum = 0;
         let terms = [];
         for (let i = 0; i < 10; i++) {
-            const term = Math.pow(p, i);
+            const term = Math.pow(q, i);
             sum += term;
             terms.push(term);
         }
         // Végtelen összeg
-        let infiniteSum = Math.abs(p) < 1 ? (1 / (1 - p)) : null;
+        let infiniteSum = Math.abs(q) < 1 ? (1 / (1 - q)) : null;
 
-        osszegElem.innerHTML = `Véges összeg (10 tag): <b>${sum.toFixed(4)}</b>`;
-        vegtelenOsszegElem.innerHTML = infiniteSum !== null ? `Végtelen összeg: <b>${infiniteSum.toFixed(4)}</b>` : '<span style="color:red">A végtelen összeg nem létezik!</span>';
+        vegElem.textContent = sum.toFixed(4);
+        vegtelenElem.innerHTML = infiniteSum !== null ? `<span style="color:black;font-weight:bold;">${infiniteSum.toFixed(4)}</span>` : '<span class="hiba">A végtelen összeg nem létezik!</span>';
 
-        // Tagok listázása a táblázatban
-        tabla.innerHTML = '';
+        // Oldalas oszlopdiagram kirajzolása, max szélesség limit, középre igazítás, szöveg balra
+        diagram.innerHTML = '';
+        const maxWidth = 400; // px
+        const maxTerm = Math.max(...terms);
         for (let i = 0; i < terms.length; i++) {
-            const tr = document.createElement('tr');
-            const tdHatvany = document.createElement('td');
-            const tdErtek = document.createElement('td');
-            tdHatvany.textContent = `p^${i}`;
-            tdErtek.textContent = terms[i].toFixed(4);
-            tr.appendChild(tdHatvany);
-            tr.appendChild(tdErtek);
-            tabla.appendChild(tr);
+            const div = document.createElement('div');
+            div.className = 'oszlop';
+            // Szélesség arányos, de max maxWidth px
+            const width = maxTerm > 0 ? Math.max(terms[i] / maxTerm * maxWidth, 2) : 2;
+            div.style.width = `${width}px`;
+            div.style.height = '32px';
+            div.style.display = 'flex';
+            div.style.alignItems = 'center';
+            div.style.justifyContent = 'flex-start';
+            div.style.background = '#4caf50';
+            div.style.margin = '6px 0'; // balra igazítás
+            div.style.borderRadius = '0 16px 16px 0';
+            div.style.fontSize = '13px';
+            div.style.color = 'white';
+            div.style.paddingLeft = '10px'; // szöveg balra
+            div.textContent = `q^${i} = ${terms[i].toFixed(4)}`;
+            diagram.appendChild(div);
         }
+        diagram.style.flexDirection = 'column';
+        diagram.style.alignItems = 'flex-start'; // balra igazítás
     }
-    csuszka.addEventListener('input', updateSeries);
+    qSlider.addEventListener('input', updateSeries);
     updateSeries();
 });
